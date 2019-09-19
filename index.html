@@ -1,0 +1,160 @@
+<script src="https://kit.fontawesome.com/4b5ee18720.js" crossorigin="anonymous"></script>
+
+<style>
+  .acessibilidadefloat {
+    z-index: 9999;
+    position: fixed;
+    top: 10%;
+    right: 0;
+  }
+  .acessibilidadefloat button {
+    background: #000000;
+    border-radius: 5px;
+    padding: 6px 5px;
+    color: #fff;
+    font-weight: 900;
+    border: 0;
+    font-size: 13px;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 7px;
+    margin-right: 9px;
+  }
+  .contrast,
+  .contrast nav,
+  .contrast div,
+  .contrast li,
+  .contrast ol,
+  .contrast header,
+  .contrast footer,
+  .contrast section,
+  .contrast main,
+  .contrast aside,
+  .contrast article {
+    background: black !important;
+    color: white !important;
+  }
+
+  .contrast h1,
+  .contrast h2,
+  .contrast h3,
+  .contrast h4,
+  .contrast h5,
+  .contrast h6,
+  .contrast p,
+  .contrast label,
+  .contrast strong,
+  .contrast em,
+  .contrast cite,
+  .contrast q,
+  .contrast i,
+  .contrast b,
+  .contrast u,
+  .contrast span {
+    color: white !important;
+  }
+
+  .contrast a{
+    color: yellow !important;
+  }
+
+  .contrast button,
+  .contrast input[type=button],
+  .contrast input[type=reset],
+  .contrast input[type=submit] {
+    background: black !important;
+    color: yellow !important;
+    border: none !important;
+  }
+  .contrast img.on-contrast-force-gray {
+    filter: grayscale(100%) contrast(120%);
+  }
+
+  .contrast img.on-contrast-force-white {
+    filter: brightness(0) invert(1);
+  }
+  .contrast input[type=text],
+  .contrast input[type=password],
+  .contrast input[type=url],
+  .contrast input[type=search],
+  .contrast input[type=email],
+  .contrast input[type=tel],
+  .contrast input[type=date],
+  .contrast input[type=month],
+  .contrast input[type=week],
+  .contrast input[type=datetime],
+  .contrast input[type=datetime-local],
+  .contrast textarea,
+  .contrast input[type=number] {
+    background: black !important;
+    border: 1px solid white !important;
+    color: white !important;
+  }
+</style>
+
+<div class="acessibilidadefloat">
+  <button onClick="fonte('a');">A+</button> <br>
+  <button onClick="fonte('d');">A-</button> <br>
+  <button onclick="window.toggleContrast()" onkeydown="window.toggleContrast()"><i class="fas fa-adjust"></i></button> <br>
+  <button onclick="location.href='http://www.vlibras.gov.br/';"><i class="fas fa-deaf"></i></button>
+  
+  
+</div>
+
+<script>
+  function fonte(e) {
+    var elemento = $("body, h1, h2, h3, h4, a");
+    var fonte = elemento.css('font-size');
+    if (e == 'a') {
+      elemento.css("fontSize", parseInt(fonte) + 5);
+    } else if ('d') {
+      elemento.css("fontSize", parseInt(fonte) - 5);
+    }
+  }
+  (function () {
+    var Contrast = {
+      storage: 'contrastState',
+      cssClass: 'contrast',
+      currentState: null,
+      check: checkContrast,
+      getState: getContrastState,
+      setState: setContrastState,
+      toogle: toogleContrast,
+      updateView: updateViewContrast
+    };
+
+    window.toggleContrast = function () { Contrast.toogle(); };
+
+    Contrast.check();
+
+    function checkContrast() {
+      this.updateView();
+    }
+
+    function getContrastState() {
+      return localStorage.getItem(this.storage) === 'true';
+    }
+
+    function setContrastState(state) {
+      localStorage.setItem(this.storage, '' + state);
+      this.currentState = state;
+      this.updateView();
+    }
+
+    function updateViewContrast() {
+      var body = document.body;
+
+      if (this.currentState === null)
+        this.currentState = this.getState();
+
+      if (this.currentState)
+        body.classList.add(this.cssClass);
+      else
+        body.classList.remove(this.cssClass);
+    }
+
+    function toogleContrast() {
+      this.setState(!this.currentState);
+    }
+  })();
+</script>
